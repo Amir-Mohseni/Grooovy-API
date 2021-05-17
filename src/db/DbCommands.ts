@@ -1,41 +1,146 @@
-import assert from 'assert'
-// import { InsertWriteOpResult } from 'mongodb'
+import { 
+  Collection, FindOneOptions, FilterQuery, InsertWriteOpResult,
+   InsertOneWriteOpResult, UpdateOneOptions, 
+   UpdateManyOptions, UpdateWriteOpResult,
+   DeleteWriteOpResultObject
+  }
+from 'mongodb'
+
 import { db } from './init'
 
-export const find = () => {}
-
-export const insertOne = () => {}
-
-export const insertMany = ( collection: string, data: {}[], cb?: Function ) => {
+export const findOne = async ( Collection: Collection, search: FindOneOptions<any> ) => {
 
   if( !db ) throw new Error()
 
-  // Get the documents collection
-  const Collection = db.collection(collection);
+  try {
+  
+    // Insert some documents
+    const results = await Collection.findOne( search );
 
-  // Insert some documents
-  Collection.insertMany( data , function(err, result) {
+    return results
 
-    const dataLength = data.length
-
-    assert.strictEqual(err, null);
-    assert.strictEqual(dataLength, result.result.n);
-    assert.strictEqual(dataLength, result.ops.length);
-    console.log(`Inserted ${ dataLength } documents into the ${ collection }`);
-
-    if( cb ) cb(result);
-
-    return result;
-
-  });
+  } catch(err) {
+    console.log(err);
+  }
 
 }
 
-export const updateOne = () => {}
+export const findMany = async ( Collection: Collection, search: FilterQuery<any> | undefined ) => {
 
-export const updateMany = () => {}
+  if( !db ) throw new Error()
 
-export const deleteOne = () => {}
+  try {
+  
+    // Insert some documents
+    const results = await Collection.find( search ).toArray();
 
-export const deleteMany = () => {}
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
+export const insertOne = async ( Collection: Collection, data: {}[] ) => {
+
+  if( !db ) throw new Error()
+
+  try {
+  
+    // Insert some documents
+    const results: InsertOneWriteOpResult<any> = await Collection.insertOne( data );
+
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
+export const insertMany = async ( Collection: Collection, data: {}[] ) => {
+
+  if( !db ) throw new Error()
+
+  try {
+  
+    // Insert some documents
+    const results: InsertWriteOpResult<any> = await Collection.insertMany( data );
+
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
+export const updateOne = async ( Collection: Collection, search: UpdateOneOptions, data: {} ) => {
+
+  if( !db ) throw new Error()
+
+  try {
+  
+    // Insert some documents
+    const results: UpdateWriteOpResult = await Collection.updateOne( search, data );
+
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
+export const updateMany = async ( Collection: Collection, search: UpdateManyOptions, data: {}[] ) => {
+
+  if( !db ) throw new Error()
+
+  try {
+  
+    // Insert some documents
+    const results: UpdateWriteOpResult = await Collection.updateMany( search, data );
+
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
+export const deleteOne = async ( Collection: Collection, search: FilterQuery<any> ) => {
+
+  if( !db ) throw new Error()
+
+  try {
+  
+    // Insert some documents
+    const results: DeleteWriteOpResultObject = await Collection.deleteOne( search );
+
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
+
+export const deleteMany = async ( Collection: Collection, search: FilterQuery<any> ) => {
+
+  if( !db ) throw new Error()
+
+  try {
+  
+    // Insert some documents
+    const results: DeleteWriteOpResultObject = await Collection.deleteMany( search );
+
+    return results
+
+  } catch(err) {
+    console.log(err);
+  }
+
+}
 

@@ -1,3 +1,4 @@
+An API built for grooovy app which is a personal music Web Application like spotify and Tidal. The API will be using nodejs and express as the framework. The database is mongoDB and I will not use mongoose for this project since the support for the package sucks these days. I might use Sockets in the future too.
 
 DataBase Structure
 
